@@ -178,7 +178,6 @@ function netsync_add_header(info, block)
 	var height = hdrdb.size() - 1;
 	console.log("HeaderDB added block #" + height + ", " + hashStr);
 
-	netsync_getheaders(info);
 }
 
 function netsync_headers(info)
@@ -189,6 +188,8 @@ function netsync_headers(info)
 	headers.forEach(function(hdr) {
 		netsync_add_header(info, hdr);
 	});
+
+	netsync_getheaders(info);
 }
 
 function netsync_block(info)
