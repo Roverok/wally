@@ -23,17 +23,25 @@ function ClassSpec(b) {
 		if (!block)
 			block = this.bestBlock;
 
+		var index = block.height;
 		var step = 1;
-		var start = 0;
 		var loc = [];
-		for (var i = block.height; i > 0; i -= step, ++start) {
-			if (start >= 10)
+
+		while (index >= 0) {
+			loc.push(this.byHeight[index]);
+			if (index == 0)
+				break;
+
+			var height = Math.max(index - step, 0);
+			while (index > height)
+				index--;
+
+			if (loc.length > 10)
 				step *= 2;
-			loc.push(this.byHeight[i]);
 		}
+
 		assert.equal(this.byHeight[0].toString(),
 			    this.network.genesisBlock.hash.toString());
-		loc.push(this.byHeight[0]);
 
 		return loc;
 	};
